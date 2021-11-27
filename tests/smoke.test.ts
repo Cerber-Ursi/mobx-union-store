@@ -1,31 +1,41 @@
-import { makeStore } from "../src";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
+import { makeStoreFactory } from "..";
 
-interface Store {
+interface StoreValues {
     value: number;
     readonly double: number;
-    inc(this: Store): void;
+}
+interface StoreActions {
+    inc(this: StoreValues): void;
 }
 
 describe("Store builder", () => {
     it("Is built correctly for simple types", () => {
-        const store = makeStore<Store>()
-            .observables({ value: 0 })
-            .computeds({
-                double() {
-                    return this.value * 2;
+        const store = makeStoreFactory<StoreValues, StoreActions>(
+            {
+                value: 0,
+                get double() {
+                    return 2 * this.value;
                 },
-            })
-            .actions({
+            },
+            {
                 inc() {
                     this.value += 1;
-                }
-            })
-            .build();
+                },
+            }
+        )({});
+
         store.inc();
         expect(store.value).toBe(1);
         expect(store.double).toBe(2);
         store.inc();
         expect(store.value).toBe(2);
         expect(store.double).toBe(4);
+
+        makeAutoObservable(store);
+        const react = jest.fn();
+        reaction(() => store.double, react);
+        store.inc();
+        expect(react.mock.calls.map(call => [call[0], call[1]])).toEqual([[6, 4]]);
     });
 });
