@@ -1,5 +1,3 @@
-import { makeAutoObservable } from "mobx";
-
 type Enum<T extends object> = {
     [K in keyof T]: T[K] extends void
         ? { readonly discriminant: K }

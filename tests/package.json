@@ -1,0 +1,24 @@
+{
+  "name": "mobx-union-store-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/chai": "^4.2.22",
+    "@types/mocha": "^9.0.0",
+    "@types/sinon": "^10.0.6",
+    "chai": "^4.3.4",
+    "mobx": "^6.3.8",
+    "mobx-union-store": "../impl",
+    "mocha": "^9.1.3",
+    "sinon": "^12.0.1",
+    "typescript": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.10",
+    "prettier": "^2.5.0"
+  },
+  "scripts": {
+    "execute": "yarn upgrade mobx-union-store && tsc && node dist/index.js"
+  }
+}
