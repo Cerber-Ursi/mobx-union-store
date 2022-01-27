@@ -1,7 +1,9 @@
-type Enum<T extends object> = {
+export const Discriminant = Symbol("Enum discriminant key");
+
+export type Enum<T extends object> = {
     [K in keyof T]: T[K] extends void
-        ? { readonly discriminant: K }
-        : { readonly discriminant: K; readonly data: T[K] };
+      ? { readonly [Discriminant]: K }
+      : { readonly [Discriminant]: K } & T[K];
 }[keyof T];
 
 type Acts<Values> = Record<string, (this: Values, ...args: any[]) => any>;
