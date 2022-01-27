@@ -1,0 +1,9 @@
+{
+  "name": "root",
+  "version": "1.0.0",
+  "dependencies": {},
+  "scripts": {
+    "build": "yarn --cwd impl build",
+    "test": "yarn build && yarn --cwd tests execute"
+  }
+}
